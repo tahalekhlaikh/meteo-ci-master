@@ -1,0 +1,22 @@
+FROM ubuntu:20.04
+
+WORKDIR /projet_site_web_meteo_msicd
+ENV PATH /projet_site_web_meteo_msicd/node_modules/.bin:$PATH
+COPY package.json /projet_site_web_meteo_msicd/package.json
+
+RUN apt update
+RUN apt -y install git vim nano curl 
+RUN apt install gettext-base
+COPY . .
+RUN apt-get update && \
+    apt-get install -y curl && \
+    curl -sL https://deb.nodesource.com/setup_14.x | bash && \
+    apt-get install -y nodejs=14.*
+RUN node --version
+RUN npm install -g npm@9.6.2
+RUN npm install
+CMD npm run build
+
+
+
+
